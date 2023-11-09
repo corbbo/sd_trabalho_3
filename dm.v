@@ -18,8 +18,8 @@ dspl_drv_NexysA7 driver (
   .d6(modulo), 
   .d7(0), 
   .d8(prog), 
-  .an(), 
-  .dec_cat()
+  .an(an), 
+  .dec_cat(dec_ddp)
 );
 
 endmodule
