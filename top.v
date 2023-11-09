@@ -120,10 +120,10 @@ end
 always @(*) begin
   case (EA)
     S_IDLE: begin
-      if (start_ed_f) begin
+      if (start_ed_f == 1 & start_ed_t == 0) begin
         PE <= S_COMM_F;
       end
-      else if (start_ed_t) begin
+      else if (start_ed_t == 1 & start_ed_f == 0) begin
         PE <= S_COMM_T;
       end
       else begin
