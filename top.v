@@ -40,7 +40,7 @@ dcm dcm (
   .rst(rst),
   .clk(clk),
   .update(update_ed),
-  .prog_in(prog),
+  .prog(prog),
   .prog_out(prog_reg),
   .clk_1(clk_1),
   .clk_2(clk_2)
