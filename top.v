@@ -9,13 +9,15 @@ module top
 
 // modules
 wire f_valid, t_valid, data_2_valid, data_1_en, buffer_empty, buffer_full, clk_1, clk_2;
-wire f_en, t_en;
+wire start_ed_f, start_ed_t, stop_ed_f_t, update_ed;
+reg f_en, t_en, parity_out;
 wire [1:0] modulo;
 reg [15:0] f_out, t_out, data_1, data_2;
 reg [2:0] prog_reg;
 
 assign data_1_en = f_valid | t_valid;
-assign modulo = f_en ? 2'b10 : (t_en ? 2'b01 : 2'b00)
+assign modulo = f_en ? 2'b10 : (t_en ? 2'b01 : 2'b00);
+assign parity = parity_out; 
 
 fibonacci fibonacci (
   .rst(rst),
@@ -67,41 +69,40 @@ wrapper wrapper (
 
 
 // edge detectors
-wire start_ed_f, start_ed_t, stop_ed_f_t, update_ed;
-edge_detector_sintese ed_start_f(
+edge_detector_sim ed_start_f(
   .clk(clk),
   .rst(rst),
   .din(start_f),
   .rising(start_ed_f)
 );
 
-edge_detector_sintese ed_start_t(
+edge_detector_sim ed_start_t(
   .clk(clk),
   .rst(rst),
   .din(start_t),
   .rising(start_ed_t)
 );
 
-edge_detector_sintese ed_stop_f_t(
+edge_detector_sim ed_stop_f_t(
   .clk(clk),
   .rst(rst),
   .din(stop_f_t),
   .rising(stop_ed_f_t)
 );
 
-edge_detector_sintese ed_update(
+edge_detector_sim ed_update(
   .clk(clk),
   .rst(rst),
   .din(update),
   .rising(update_ed)
 );
 
-localparam 3'b000 = S_IDLE;
-localparam 3'b001 = S_COMM_F;
-localparam 3'b010 = S_COMM_T;
-localparam 3'b011 = S_WAIT_F;
-localparam 3'b100 = S_WAIT_T;
-localparam 3'b101 = S_BUF_EMPTY;
+localparam S_IDLE = 3'b000;
+localparam S_COMM_F = 3'b001;
+localparam S_COMM_T = 3'b010;
+localparam S_WAIT_F = 3'b011;
+localparam S_WAIT_T = 3'b100;
+localparam S_BUF_EMPTY = 3'b101;
 
 //Máquina de Estados
 reg [2:0] EA, PE;
@@ -183,7 +184,6 @@ end
 //Lógica de estados
 always @(posedge clk or posedge rst) begin
   if (rst) begin
-    parity <= 0;
     f_en <= 0;
     t_en <= 0;
   end
@@ -211,6 +211,16 @@ always @(posedge clk or posedge rst) begin
       end
     endcase
   end
+end
+
+reg helper;
+integer i;
+always @(*) begin
+  helper <= data_2[15] ^ data_2[14];
+  for (i = 13; i > -1; i = i - 1) begin
+    helper <= helper ^ data_2[i];
+  end
+  parity_out <= helper;
 end
 
 endmodule

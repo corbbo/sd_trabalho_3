@@ -1,4 +1,4 @@
-module edge_detector
+module edge_detector_sim
 (
   input clock, reset, din,
   output rising

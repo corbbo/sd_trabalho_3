@@ -1,4 +1,4 @@
-module edge_detector
+module edge_detector_sintese
 (
   input clk, rst, din,
   output reg rising
