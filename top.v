@@ -13,10 +13,11 @@ wire f_en, t_en;
 reg [15:0] f_out, t_out, data_1, data_2;
 reg [2:0] prog_reg;
 assign data_1_en = f_valid | t_valid;
+
 fibonacci fibonacci (
   .rst(rst),
   .clk(clk_1),
-  .f_en(start_ed_f),
+  .f_en(f_en),
   .f_valid(f_valid),
   .f_out(f_out)
 );
@@ -24,7 +25,7 @@ fibonacci fibonacci (
 timer timer (
   .rst(rst),
   .clk(clk_1),
-  .t_en(start_ed_t),
+  .t_en(t_en),
   .t_valid(t_valid),
   .t_out(t_out)
 );
@@ -180,15 +181,30 @@ end
 always @(posedge clk or posedge rst) begin
   if (rst) begin
     parity <= 0;
-    led <= 0;
+    f_en <= 0;
+    t_en <= 0;
   end
   else begin
     case (EA)
       S_IDLE: begin
-        
+        f_en <= 0;
+        t_en <= 0;
       end
       S_COMM_F: begin
-        
+        f_en <= 1;
+      end
+      S_COMM_T: begin
+        t_en <= 1;
+      end
+      S_WAIT_F: begin
+        f_en <= 0;
+      end
+      S_WAIT_T: begin
+        t_en <= 0;
+      end
+      S_BUF_EMPTY: begin
+        t_en <= 0;
+        f_en <= 0;
       end
     endcase
   end

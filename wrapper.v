@@ -6,9 +6,9 @@ module wrapper
   output wire buffer_empty, buffer_full, data_2_valid
 );
 
-reg [15:0] t_buffer [0:7]
-reg [2:0] buffer_rd, buffer_wr
-  reg [15:0] output_data
+reg [15:0] t_buffer [0:7];
+reg [2:0] buffer_rd, buffer_wr;
+reg [15:0] output_data;
 
 //lógica de escrever
   always@(posedge clk_1 or posedge rst) begin
