@@ -10,9 +10,12 @@ module top
 // modules
 wire f_valid, t_valid, data_2_valid, data_1_en, buffer_empty, buffer_full, clk_1, clk_2;
 wire f_en, t_en;
+wire [1:0] modulo;
 reg [15:0] f_out, t_out, data_1, data_2;
 reg [2:0] prog_reg;
+
 assign data_1_en = f_valid | t_valid;
+assign modulo = f_en ? 2'b10 : (t_en ? 2'b01 : 2'b00)
 
 fibonacci fibonacci (
   .rst(rst),
@@ -44,7 +47,7 @@ dm dm (
   .rst(rst),
   .clk(clk),
   .prog(prog_reg),
-  .modulo(),
+  .modulo(modulo),
   .data_2(data_2),
   .an(an),
   .dec_ddp(dec_ddp)

@@ -7,39 +7,42 @@ module wrapper
 );
 
 reg [15:0] t_buffer [0:7];
-reg [2:0] buffer_rd, buffer_wr;
+reg [2:0] pointer_w, pointer_r;
 reg [15:0] output_data;
 
-//lógica de escrever
-  always@(posedge clk_1 or posedge rst) begin
-    if (rst) begin
-      buffer_wr <= 2'd0;
-      buffer_empty <= 1'd1;
+assign buffer_empty = pointer_w == pointer_r ? 1 : 0;
+assign buffer_full = pointer_w == 3'd7 & pointer_r < 3'd7 ? 1 : 0;
+
+//logica de escrever
+always @(posedge clk_1 or posedge rst) begin
+  if (rst) begin
+    pointer_w <= 3'd0;
+  end
+  else if (data_1_en) begin
+    if (pointer_w < 3'd7) begin // buffer_control = 1, w
+      t_buffer[pointer_w] <= data_1;
+      pointer_w <= pointer_w + 3'd1;
     end
-    else if (data_1_en & ~buffer_full) begin //se o buffer não tá cheio (tem espaço pra escrever)
-      t_buffer[buffer_wr] <= data_1; //coloca data_1 na primeira posição do t_buffer
-      buffer_wr <= buffer_wr + 2'd1; //incrementa o ponteiro de escrita
-      buffer_empty <= 1'd0;
-    end
-    if (buffer_wr == buffer_rd - 1) begin //se o buffer chegar no final
-      buffer_full <= 1'b1; //buffer_full = 1
+    else if (pointer_w == pointer_r - 3'd1) begin // pointer_w = 7, pointer_r = 6, leu a ultima coisa que tinha (t_buffer[6]), pode comecar a escrever no inicio de novo
+      pointer_w <= 3'd0;
+      t_buffer[pointer_w] <= data_1;
     end
   end
+end
 
-//lógica de ler
-  always@(posedge clk_2 or posedge rst) begin
-    if (rst) begin
-      buffer_rd <= 2'd0;
-      output_data <= 0;
-    end
-    else if (~buffer_empty) begin //se o buffer não estiver vazio (tem coisa pra ler)
-      output_data <= t_buffer[buffer_rd]; //output_data recebe o valor dentro de tbuffer
-      buffer_rd <= buffer_rd + 2'd1; //incrementa o ponteiro de leitura
-      buffer_full <= 1'd0; //indica que o buffer não está cheio
+//logica de ler
+always @(posedge clk_2 or posedge rst) begin
+  if (rst) begin
+    pointer_r <= 3'd0;
+    output_data <= 0;
+  end
+  else if (~buffer_empty) begin
+    output_data <= t_buffer[pointer_r];
+    pointer_r <= pointer_r + 3'd1;
+    if (pointer_r >= 3'd7) begin
+      pointer_r <= 3'd0;
     end
   end
-
-  assign data_2 = output_data;
-  assign data_2_valid = (~buffer_empty) ? 1 : 0;
+end
   
 endmodule

@@ -12,21 +12,21 @@ reg [31:0] counter_clk_1, counter_clk_2;
 // prog_out <= prog;
 always @(posedge clk or posedge rst) begin
   if (rst) begin
-    prog <= 0;
+    prog_reg <= 0;
   end else if (update) begin
     prog_reg <= prog;
   end
 end
 
 // Divisores de clock
-wire clock, clock_1;
-reg [31:0] counter, counter_clk_1;
+reg clock, clock_1;
+reg [31:0] counter;
 always@(posedge clk or posedge rst) begin
-  if (reset) begin
+  if (rst) begin
     clock <= 0;
     counter <= 0;
   end
-  else if begin
+  else begin
     case (prog_reg)
       2'b000: begin
         //clock de 0.1 segundos; counter_clkc_2 = conversao
@@ -64,7 +64,7 @@ always@(posedge clk or posedge rst) begin
       2'b011: begin
         //clock de 1 segundo; counter_clk_2 = conversao
               if (counter >= 31'd49999999) begin
-                 <= ~clock;
+                 clock <= ~clock;
                 counter <= 31'd0;
               end
               else begin
