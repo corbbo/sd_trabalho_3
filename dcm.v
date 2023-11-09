@@ -28,7 +28,7 @@ always@(posedge clk or posedge rst) begin
   end
   else begin
     case (prog_reg)
-      2'b000: begin
+      2'd0: begin
         //clock de 0.1 segundos; counter_clkc_2 = conversao
               if (counter >= 31'd4999999) begin
                 clock <= ~clock;
@@ -39,7 +39,7 @@ always@(posedge clk or posedge rst) begin
               end
             end
 
-      2'b001: begin
+      2'd1: begin
         //clock de 0.2 segundos; counter_clk_2 = conversao
               if (counter >= 31'd9999998) begin
                 clock <= ~clock;
@@ -50,7 +50,7 @@ always@(posedge clk or posedge rst) begin
               end
             end
 
-      2'b010: begin
+      2'd2: begin
         //clock de 0.4 segundos; counter_clk_2 = conversao
               if (counter >= 31'd19999996) begin
                 clock <= ~clock;
@@ -61,7 +61,7 @@ always@(posedge clk or posedge rst) begin
               end
             end
 
-      2'b011: begin
+      2'd3: begin
         //clock de 1 segundo; counter_clk_2 = conversao
               if (counter >= 31'd49999999) begin
                  clock <= ~clock;
@@ -72,7 +72,7 @@ always@(posedge clk or posedge rst) begin
               end
             end
 
-      2'b100: begin
+      2'd4: begin
         //clock de 1.6 segundos; counter_clk_2 = conversao
               if (counter >= 31'd79999999) begin
                 clock <= ~clock;
@@ -83,7 +83,7 @@ always@(posedge clk or posedge rst) begin
               end
             end
       
-      2'b101: begin
+      2'd5: begin
         //clock de 3.2 segundos; counter_clk_2 = conversao
               if (counter >= 31'd159999998) begin
                 clock <= ~clock;
@@ -94,7 +94,7 @@ always@(posedge clk or posedge rst) begin
               end
             end
     
-      2'b110: begin
+      2'd6: begin
         //clock de 6.4 segundos; counter_clk_2 = conversao
               if (counter >= 31'd319999996) begin
                 clock <= ~clock;
@@ -105,7 +105,7 @@ always@(posedge clk or posedge rst) begin
               end
             end
       
-      2'b111: begin
+      2'd7: begin
         //clock de 12.8 segundos; counter_clk_2 = conversao
               if (counter >= 31'd639999992) begin
                 clock <= ~clock;
