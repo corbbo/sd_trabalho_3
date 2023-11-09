@@ -78,6 +78,6 @@ module tb;
     stop_f_t  = 1'b0;
   end
 
-  top DUT(.reset(rst), .clock(clk), .parity(parity), .start_f(start_f), .start_t(start_t), .update(update), .stop_f_t(stop_f_t), .prog(prog), .led(led), .an(an), .dec_cat(dec_cat));
+top DUT(.rst(rst), .clk(clk), .parity(parity), .start_f(start_f), .start_t(start_t), .update(update), .stop_f_t(stop_f_t), .prog(prog), .led(led), .an(an), .dec_cat(dec_cat));
 
 endmodule 
