@@ -18,7 +18,7 @@ always @(posedge clk_1 or posedge rst) begin
   if (rst) begin
     pointer_w <= 3'd0;
   end
-  else if (data_1_en) begin
+  else if (data_1_en & ~buffer_empty) begin
     if (pointer_w < 3'd7) begin // buffer_control = 1, w
       t_buffer[pointer_w] <= data_1;
       pointer_w <= pointer_w + 3'd1;
