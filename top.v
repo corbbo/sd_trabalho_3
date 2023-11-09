@@ -14,7 +14,7 @@ reg f_en, t_en, parity_out;
 wire [1:0] modulo;
 wire [15:0] f_out, t_out;
 reg [15:0] data_1, data_2;
-reg [2:0] prog_reg;
+wire [2:0] prog_out;
 
 assign data_1_en = f_valid | t_valid;
 assign modulo = f_en ? 2'b10 : (t_en ? 2'b01 : 2'b00);
