@@ -12,7 +12,7 @@ wire f_valid, t_valid, data_2_valid, data_1_en, buffer_empty, buffer_full, clk_1
 wire start_ed_f, start_ed_t, stop_ed_f_t, update_ed;
 reg f_en, t_en, parity_out;
 wire [1:0] modulo;
-reg [15:0] f_out, t_out, data_1, data_2;
+wire [15:0] f_out, t_out, data_1, data_2;
 reg [2:0] prog_reg;
 
 assign data_1_en = f_valid | t_valid;
