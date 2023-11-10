@@ -13,8 +13,10 @@ wire start_ed_f, start_ed_t, stop_ed_f_t, update_ed;
 reg f_en, t_en, parity_out;
 wire [1:0] modulo;
 wire [15:0] f_out, t_out;
-reg [15:0] data_1, data_2;
+reg [15:0] data_1;
+wire [15:0] data_2;
 wire [2:0] prog_out;
+wire [2:0] prog_reg;
 
 assign data_1_en = f_valid | t_valid;
 assign modulo = f_en ? 2'b10 : (t_en ? 2'b01 : 2'b00);
@@ -71,29 +73,29 @@ wrapper wrapper (
 
 // edge detectors
 edge_detector_sim ed_start_f(
-  .clk(clk),
-  .rst(rst),
+  .clock(clk),
+  .reset(rst),
   .din(start_f),
   .rising(start_ed_f)
 );
 
 edge_detector_sim ed_start_t(
-  .clk(clk),
-  .rst(rst),
+  .clock(clk),
+  .reset(rst),
   .din(start_t),
   .rising(start_ed_t)
 );
 
 edge_detector_sim ed_stop_f_t(
-  .clk(clk),
-  .rst(rst),
+  .clock(clk),
+  .reset(rst),
   .din(stop_f_t),
   .rising(stop_ed_f_t)
 );
 
 edge_detector_sim ed_update(
-  .clk(clk),
-  .rst(rst),
+  .clock(clk),
+  .reset(rst),
   .din(update),
   .rising(update_ed)
 );
