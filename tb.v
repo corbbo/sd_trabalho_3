@@ -18,9 +18,9 @@ module tb;
 
   initial
   begin
-    reset = 1'b1;
+    rst = 1'b1;
     #30;
-    reset = 1'b0;
+    rst = 1'b0;
     start_f  = 1'b0;
     start_t  = 1'b0;
     stop_f_t = 1'b0;
