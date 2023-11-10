@@ -128,6 +128,7 @@ end
 always @(posedge clk or posedge rst) begin
   if (rst) begin
     clock_1 <= 0;
+    counter_clk_1 <= 0;
   end
   else begin
     if (counter_clk_1 >= 31'd4999999) begin

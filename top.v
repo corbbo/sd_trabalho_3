@@ -13,12 +13,13 @@ wire start_ed_f, start_ed_t, stop_ed_f_t, update_ed;
 reg f_en, t_en, parity_out;
 wire [1:0] modulo;
 wire [15:0] f_out, t_out;
-reg [15:0] data_1;
+wire [15:0] data_1;
 wire [15:0] data_2;
 wire [2:0] prog_out;
 wire [2:0] prog_reg;
 
 assign data_1_en = f_valid | t_valid;
+assign data_1 = f_en ? f_out : t_en ? t_out : 0;
 assign modulo = f_en ? 2'b10 : (t_en ? 2'b01 : 2'b00);
 assign parity = parity_out; 
 
@@ -108,80 +109,85 @@ localparam S_WAIT_T = 3'b100;
 localparam S_BUF_EMPTY = 3'b101;
 
 //Máquina de Estados
-reg [2:0] EA, PE;
+reg [2:0] EA; //PE
+// always @(posedge clk or posedge rst) begin
+//   if (rst) begin
+//     EA <= S_IDLE;
+//   end
+//   else begin
+//     EA <= PE;
+//   end
+// end
+
+//Lógica de troca de estados
 always @(posedge clk or posedge rst) begin
   if (rst) begin
     EA <= S_IDLE;
   end
   else begin
-    EA <= PE;
-  end
-end
-
-//Lógica de troca de estados
-always @(*) begin
   case (EA)
     S_IDLE: begin
       if (start_ed_f == 1 & start_ed_t == 0) begin
-        PE <= S_COMM_F;
+        EA <= S_COMM_F;
       end
       else if (start_ed_t == 1 & start_ed_f == 0) begin
-        PE <= S_COMM_T;
+        EA <= S_COMM_T;
       end
       else begin
-        PE <= EA;
+        EA <= EA;
       end
     end
     S_COMM_F: begin
       if (stop_ed_f_t) begin
-        PE <= S_BUF_EMPTY;
+        EA <= S_BUF_EMPTY;
       end
       else if (buffer_full) begin
-        PE <= S_WAIT_F;
+        EA <= S_WAIT_F;
       end
       else begin
-        PE <= EA;
+        EA <= EA;
       end
     end
     S_COMM_T: begin
       if (stop_ed_f_t) begin
-        PE <= S_BUF_EMPTY;
+        EA <= S_BUF_EMPTY;
       end
       else if (buffer_full) begin
-        PE <= S_WAIT_T;
+        EA <= S_WAIT_T;
       end
       else begin
-        PE <= EA;
+        EA <= EA;
       end
     end
     S_WAIT_F: begin
       if (stop_ed_f_t) begin
-        PE <= S_BUF_EMPTY;
+        EA <= S_BUF_EMPTY;
       end
       else if (~buffer_full) begin
-        PE <= S_COMM_F;
+        EA <= S_COMM_F;
       end
       else begin
-        PE <= EA;
+        EA <= EA;
       end
     end
     S_WAIT_T: begin
       if (stop_ed_f_t) begin
-        PE <= S_BUF_EMPTY;
+        EA <= S_BUF_EMPTY;
       end
       else if (~buffer_full) begin
-        PE <= S_COMM_T;
+        EA <= S_COMM_T;
       end
       else begin
-        PE <= EA;
+        EA <= EA;
       end
     end
     S_BUF_EMPTY: begin
       if (buffer_empty & ~data_2_valid) begin
-        PE <= S_IDLE;
+        EA <= S_IDLE;
       end
     end
   endcase
+  end
 end
 
 //Lógica de estados

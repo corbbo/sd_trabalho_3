@@ -2,7 +2,7 @@
 
 module tb;
 
-  reg clk, reset, start_f, start_t, update, stop_f_t;
+  reg clk, rst, start_f, start_t, update, stop_f_t;
   reg [2:0] prog;
   wire [5:0] led;
   wire [7:0] an, dec_cat;
