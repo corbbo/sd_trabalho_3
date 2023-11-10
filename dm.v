@@ -19,9 +19,9 @@ dspl_drv_NexysA7 driver (
   .d3({1'b1, d3, 1'b0}), 
   .d4({1'b1, d4, 1'b0}), 
   .d5(6'd0), 
-  .d6({1'b1, modulo, 1'b0}), 
+  .d6({1'b1, {2'b0, modulo} , 1'b0}), 
   .d7(6'd0), 
-  .d8({1'b1, prog, 1'b0}), 
+  .d8({1'b1, {1'b0, prog} , 1'b0}), 
   .an(an), 
   .dec_cat(dec_ddp)
 );
