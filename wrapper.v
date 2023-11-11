@@ -24,7 +24,7 @@ always @(posedge clk_1 or posedge rst) begin
       t_buffer[pointer_w] <= data_1;
       pointer_w <= pointer_w + 3'd1;
     end
-    else if (pointer_w == 7 & pointer_w == pointer_r) begin // pointer_w = 7, pointer_r = 7, leu a ultima coisa que tinha (t_buffer[6]), pode comecar a escrever no inicio de novo
+    else if (pointer_w == 7 & pointer_w == pointer_r) begin // pointer_w = 7, pointer_r = 6, leu a ultima coisa que tinha (t_buffer[6]), pode comecar a escrever no inicio de novo
       pointer_w <= 3'd0;
       t_buffer[pointer_w] <= data_1;
     end
@@ -42,7 +42,7 @@ always @(posedge clk_2 or posedge rst) begin
     pointer_r <= pointer_r + 3'd1;
     if (pointer_r >= 3'd7) begin
       pointer_r <= 3'd0;
-      data_2 <= 0;
+      data_2 <= t_buffer[pointer_r];
     end
   end
 end

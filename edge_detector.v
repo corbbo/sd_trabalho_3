@@ -1,6 +1,6 @@
 module edge_detector_sim
 (
-  input clock, reset, din,
+  input clk, rst, din,
   output rising
 );
 
@@ -8,9 +8,9 @@ module edge_detector_sim
 
   assign rising = (din_reg == 1'b0 && din == 1'b1) ? 1'b1 : 1'b0;
 
-  always @(posedge clock or posedge reset)
+  always @(posedge clk or posedge rst)
   begin
-    if (reset == 1'b1) begin
+    if (rst == 1'b1) begin
       din_reg <= 1'b0;
     end
     else begin

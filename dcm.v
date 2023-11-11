@@ -28,91 +28,91 @@ always@(posedge clk or posedge rst) begin
   end
   else begin
     case (prog_reg)
-      2'd0: begin
+      3'b000: begin
         //clock de 0.1 segundos; counter_clkc_2 = conversao
-              if (counter >= 31'd4999999) begin
+              if (counter >= 32'd4999999) begin
                 clock <= ~clock;
-                counter <= 31'd0;
+                counter <= 32'd0;
               end
               else begin
-                counter <= counter + 31'd1;
+                counter <= counter + 32'd1;
               end
             end
 
-      2'd1: begin
+      3'b001: begin
         //clock de 0.2 segundos; counter_clk_2 = conversao
-              if (counter >= 31'd9999998) begin
+              if (counter >= 32'd9999998) begin
                 clock <= ~clock;
-                counter <= 31'd0;
+                counter <= 32'd0;
               end
               else begin
-                counter <= counter + 31'd1;
+                counter <= counter + 32'd1;
               end
             end
 
-      2'd2: begin
+      3'b010: begin
         //clock de 0.4 segundos; counter_clk_2 = conversao
-              if (counter >= 31'd19999996) begin
+              if (counter >= 32'd19999996) begin
                 clock <= ~clock;
-                counter <= 31'd0;
+                counter <= 32'd0;
               end
               else begin
-                counter <= counter + 31'd1;
+                counter <= counter + 32'd1;
               end
             end
 
-      2'd3: begin
+      3'b011: begin
         //clock de 1 segundo; counter_clk_2 = conversao
-              if (counter >= 31'd49999999) begin
+              if (counter >= 32'd49999999) begin
                  clock <= ~clock;
-                counter <= 31'd0;
+                counter <= 32'd0;
               end
               else begin
-                counter <= counter + 31'd1;
+                counter <= counter + 32'd1;
               end
             end
 
-      2'd4: begin
+      3'b100: begin
         //clock de 1.6 segundos; counter_clk_2 = conversao
-              if (counter >= 31'd79999999) begin
+              if (counter >= 32'd79999999) begin
                 clock <= ~clock;
-                counter <= 31'd0;
+                counter <= 32'd0;
               end
               else begin
-                counter <= counter + 31'd1;
+                counter <= counter + 32'd1;
               end
             end
       
-      2'd5: begin
+      3'b101: begin
         //clock de 3.2 segundos; counter_clk_2 = conversao
-              if (counter >= 31'd159999998) begin
+              if (counter >= 32'd159999998) begin
                 clock <= ~clock;
-                counter <= 31'd0;
+                counter <= 32'd0;
               end
               else begin
-                counter <= counter + 31'd1;
+                counter <= counter + 32'd1;
               end
             end
     
-      2'd6: begin
+      3'b110: begin
         //clock de 6.4 segundos; counter_clk_2 = conversao
-              if (counter >= 31'd319999996) begin
+              if (counter >= 32'd329999996) begin
                 clock <= ~clock;
-                counter <= 31'd0;
+                counter <= 32'd0;
               end
               else begin
-                counter <= counter + 31'd1;
+                counter <= counter + 32'd1;
               end
             end
       
-      2'd7: begin
+      3'b111: begin
         //clock de 12.8 segundos; counter_clk_2 = conversao
-              if (counter >= 31'd639999992) begin
+              if (counter >= 32'd639999992) begin
                 clock <= ~clock;
-                counter <= 31'd0;
+                counter <= 32'd0;
               end
               else begin
-                counter <= counter + 31'd1;
+                counter <= counter + 32'd1;
               end
             end
       
@@ -131,12 +131,12 @@ always @(posedge clk or posedge rst) begin
     counter_clk_1 <= 0;
   end
   else begin
-    if (counter_clk_1 >= 31'd4999999) begin
+    if (counter_clk_1 >= 32'd4999999) begin
       clock_1 <= ~clock_1;
-      counter_clk_1 <= 31'd0;
+      counter_clk_1 <= 32'd0;
     end
     else begin
-      counter_clk_1 <= counter_clk_1 + 31'd1;
+      counter_clk_1 <= counter_clk_1 + 32'd1;
     end
   end
 end
