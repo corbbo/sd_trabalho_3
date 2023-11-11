@@ -226,4 +226,11 @@ always @(posedge clk or posedge rst) begin
   end
 end
 
+assign led[0] = (EA == S_IDLE) ? 1'b1 : 0;
+assign led[1] = (EA == S_COMM_F) ? 1'b1 : 0;
+assign led[2] = (EA == S_COMM_T) ? 1'b1 : 0;
+assign led[3] = (EA == S_WAIT_F) ? 1'b1 : 0;
+assign led[4] = (EA == S_WAIT_T) ? 1'b1 : 0;
+assign led[5] = (EA == S_BUF_EMPTY) ? 1'b1 : 0;
+
 endmodule
