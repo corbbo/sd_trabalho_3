@@ -190,6 +190,9 @@ always @(posedge clk or posedge rst) begin
         EA <= S_IDLE;
       end
     end
+    default: begin
+      EA <= S_IDLE;
+    end
   endcase
   end
 end
@@ -208,17 +211,25 @@ always @(posedge clk or posedge rst) begin
       end
       S_COMM_F: begin
         f_en <= 1;
+        t_en <= 0;
       end
       S_COMM_T: begin
+        f_en <= 0;
         t_en <= 1;
       end
       S_WAIT_F: begin
         f_en <= 0;
+        t_en <= 0;
       end
       S_WAIT_T: begin
+        f_en <= 0;
         t_en <= 0;
       end
       S_BUF_EMPTY: begin
+        t_en <= 0;
+        f_en <= 0;
+      end
+      default: begin
         t_en <= 0;
         f_en <= 0;
       end
