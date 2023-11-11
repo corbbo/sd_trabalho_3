@@ -9,6 +9,7 @@ vlog -work work dspl_drv_NexysA7.v
 vlog -work work dm.v
 vlog -work work wrapper.v
 vlog -work work edge_detector.v
+vlog -work work parity_check.v
 vlog -work work top.v
 vlog -work work tb.v
 
