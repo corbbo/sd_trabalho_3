@@ -11,7 +11,7 @@ module top
 wire f_valid, t_valid, data_2_valid, data_1_en, buffer_empty, buffer_full, clk_1, clk_2;
 wire start_ed_f, start_ed_t, stop_ed_f_t, update_ed;
 reg f_en, t_en;
-wire [1:0] modulo;
+reg [1:0] modulo;
 wire [15:0] f_out, t_out;
 wire [15:0] data_1;
 wire [15:0] data_2;
@@ -20,7 +20,6 @@ wire [2:0] prog_reg;
 
 assign data_1_en = f_valid | t_valid;
 assign data_1 = f_en ? f_out : t_en ? t_out : 0;
-assign modulo = f_en ? 2'b10 : (t_en ? 2'b01 : 2'b00);
 
 fibonacci fibonacci (
   .rst(rst),
@@ -202,36 +201,44 @@ always @(posedge clk or posedge rst) begin
   if (rst) begin
     f_en <= 0;
     t_en <= 0;
+    modulo <= 0;
   end
   else begin
     case (EA)
       S_IDLE: begin
         f_en <= 0;
         t_en <= 0;
+        modulo <= 0;
       end
       S_COMM_F: begin
         f_en <= 1;
         t_en <= 0;
+        modulo <= 2'b01;
       end
       S_COMM_T: begin
         f_en <= 0;
         t_en <= 1;
+        modulo <= 2'b10;
       end
       S_WAIT_F: begin
         f_en <= 0;
         t_en <= 0;
+        modulo <= 2'b01;
       end
       S_WAIT_T: begin
         f_en <= 0;
         t_en <= 0;
+        modulo <= 2'b10;
       end
       S_BUF_EMPTY: begin
         t_en <= 0;
         f_en <= 0;
+        modulo <= 0;
       end
       default: begin
         t_en <= 0;
         f_en <= 0;
+        modulo <= 0;
       end
     endcase
   end

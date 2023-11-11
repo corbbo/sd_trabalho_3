@@ -11,8 +11,8 @@ reg [2:0] pointer_w, pointer_r;
 reg [15:0] output_data;
 
 assign buffer_empty = pointer_w == pointer_r ? 1 : 0;
-assign buffer_full = pointer_w == 3'd7 & pointer_r < 3'd7 ? 1 : 0;
 assign data_2_valid = pointer_w != pointer_r ? 1 : 0;
+assign buffer_full = pointer_w + 3'd1 == pointer_r ? 1 : 0;
 
 //logica de escrever
 always @(posedge clk_1 or posedge rst) begin
@@ -24,9 +24,9 @@ always @(posedge clk_1 or posedge rst) begin
       t_buffer[pointer_w] <= data_1;
       pointer_w <= pointer_w + 3'd1;
     end
-    else if (pointer_w == 7 & pointer_w == pointer_r) begin // pointer_w = 7, pointer_r = 7, leu a ultima coisa que tinha (t_buffer[6]), pode comecar a escrever no inicio de novo
-      pointer_w <= 3'd0;
+    else begin
       t_buffer[pointer_w] <= data_1;
+      pointer_w <= 3'd0;
     end
   end
 end
