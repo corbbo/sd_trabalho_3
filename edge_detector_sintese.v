@@ -7,9 +7,9 @@ module edge_detector_sintese
   reg [16:0] contador;
   reg [1:0] EA;
 
-  always @(posedge clock or posedge reset)
+  always @(posedge clk or posedge rst)
   begin
-    if (reset == 1'b1) begin
+    if (rst == 1'b1) begin
 	  EA <= 2'd0;
       rising <= 1'b0;
 	  contador <= 17'd0;

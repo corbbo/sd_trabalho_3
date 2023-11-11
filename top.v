@@ -1,7 +1,7 @@
 module top 
 (
   input wire clk, rst, start_f, start_t, stop_f_t, update,
-  input reg [2:0] prog,
+  input wire [2:0] prog,
   output wire [7:0] an, dec_ddp,
   output wire [5:0] led,
   output wire parity
@@ -77,30 +77,30 @@ parity_check parity_check (
 
 
 // edge detectors
-edge_detector_sim ed_start_f(
-  .clock(clk),
-  .reset(rst),
+edge_detector_sintese ed_start_f(
+  .clk(clk),
+  .rst(rst),
   .din(start_f),
   .rising(start_ed_f)
 );
 
-edge_detector_sim ed_start_t(
-  .clock(clk),
-  .reset(rst),
+edge_detector_sintese ed_start_t(
+  .clk(clk),
+  .rst(rst),
   .din(start_t),
   .rising(start_ed_t)
 );
 
-edge_detector_sim ed_stop_f_t(
-  .clock(clk),
-  .reset(rst),
+edge_detector_sintese ed_stop_f_t(
+  .clk(clk),
+  .rst(rst),
   .din(stop_f_t),
   .rising(stop_ed_f_t)
 );
 
-edge_detector_sim ed_update(
-  .clock(clk),
-  .reset(rst),
+edge_detector_sintese ed_update(
+  .clk(clk),
+  .rst(rst),
   .din(update),
   .rising(update_ed)
 );

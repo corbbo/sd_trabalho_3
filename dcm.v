@@ -1,7 +1,7 @@
 module dcm 
 (
   input wire rst, clk, update,
-  input reg [2:0] prog,
+  input wire [2:0] prog,
   output wire [2:0] prog_out,
   output wire clk_1, clk_2
 );

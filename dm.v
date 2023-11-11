@@ -1,9 +1,9 @@
 module dm 
 (
   input wire rst, clk,
-  input reg [2:0] prog,
-  input reg [1:0] modulo,
-  input reg [15:0] data_2,
+  input wire [2:0] prog,
+  input wire [1:0] modulo,
+  input wire [15:0] data_2,
   output wire [7:0] an, dec_ddp
 );
 wire [3:0] d1, d2, d3, d4;
